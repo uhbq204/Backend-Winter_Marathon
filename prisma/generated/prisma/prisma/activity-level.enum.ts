@@ -1,0 +1,12 @@
+import { registerEnumType } from '@nestjs/graphql';
+
+export enum ActivityLevel {
+    SECONDARYLY = "SECONDARYLY",
+    LIGHT = "LIGHT",
+    MODERATE = "MODERATE",
+    ACTIVE = "ACTIVE",
+    VERY_ACTIVE = "VERY_ACTIVE"
+}
+
+
+registerEnumType(ActivityLevel, { name: 'ActivityLevel', description: undefined })

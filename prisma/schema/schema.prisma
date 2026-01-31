@@ -1,5 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "node node_modules/prisma-nestjs-graphql"
+  output = "../generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
