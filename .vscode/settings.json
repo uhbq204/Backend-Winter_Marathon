@@ -1,4 +1,5 @@
 {
     "chatgpt.followUpQueueMode": "queue",
-    "chatgpt.commentCodeLensEnabled": true
+    "chatgpt.commentCodeLensEnabled": true,
+    "liveServer.settings.multiRootWorkspaceName": "back-end-winter"
 }

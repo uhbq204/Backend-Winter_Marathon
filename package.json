@@ -18,8 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "postinstall": "prisma generate",
-    "prisma:generate": "prisma generate",
+    "postinstall": "prisma generate && node scripts/fix-prisma-decimal-imports.cjs",
+    "prisma:generate": "prisma generate && node scripts/fix-prisma-decimal-imports.cjs",
     "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
@@ -34,14 +34,17 @@
     "@nestjs/platform-express": "^11.0.1",
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
+    "@prisma/client-runtime-utils": "^7.3.0",
     "argon2": "^0.44.0",
     "class-transformer": "^0.5.1",
     "cookie-parser": "^1.4.7",
+    "decimal.js": "^10.6.0",
     "graphql": "^16.12.0",
     "graphql-type-json": "^0.3.2",
     "passport-jwt": "^4.0.1",
     "pg": "^8.17.2",
     "prisma-graphql": "^0.0.1",
+    "prisma-graphql-type-decimal": "^4.0.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

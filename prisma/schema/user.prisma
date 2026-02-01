@@ -71,7 +71,7 @@ enum Gender {
 }
 
 enum ActivityLevel {
-    SECONDARYLY
+    SECONDARILY
     LIGHT
     MODERATE
     ACTIVE
@@ -81,5 +81,5 @@ enum ActivityLevel {
 enum NutritionGoal {
     WEIGHT_LOSS
     MAINTENANCE
-    MUSLE_GAIN
+    MUSCLE_GAIN
 }
