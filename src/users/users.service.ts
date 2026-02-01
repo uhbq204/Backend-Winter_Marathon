@@ -1,4 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import type { Prisma } from '@prisma/client';
+import { hash } from 'argon2';
+import type { UserUpdateInput } from 'prisma/generated/prisma/user/user-update.input';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -28,6 +31,58 @@ export class UsersService {
                     equals: email,
                     mode: 'insensitive'
                 }
+            }
+        })
+    }
+
+    async updateProfile(id: string, input: UserUpdateInput) {
+    const {profile, measurements, password, ...data} = input
+
+    const updateProfile: Prisma.XOR<
+        Prisma.UserUpdateInput,
+        Prisma.UserUncheckedUpdateInput
+    > = profile
+        ?   {
+                profile: {
+                    upsert: {
+                        create: profile as Prisma.ProfileCreateWithoutUserInput,
+                        update: profile as Prisma.ProfileUpdateWithoutUserInput
+                    }
+                }
+            }
+        :   {}
+        
+    const updateMeasurements: Prisma.XOR<
+        Prisma.UserUpdateInput,
+        Prisma.UserUncheckedUpdateInput
+    > = measurements
+        ?   {
+                measurements: {
+                    upsert: {
+                        create: measurements as Prisma.BodyMeasurementCreateWithoutUserInput,
+                        update: measurements as Prisma.BodyMeasurementUpdateWithoutUserInput
+                    }
+                }
+            }
+        :   {}
+        
+    const hashedPassword = password && typeof password === 'string'
+        ?   {
+                password: await hash(password)
+            }
+        :   {}
+            
+        return this.prisma.user.update({
+            where: { id },
+            data: {
+                ...hashedPassword,
+                ...updateProfile,
+                ...updateMeasurements,
+                email: data.email
+            },
+            include: {
+                measurements: true,
+                profile: true
             }
         })
     }
