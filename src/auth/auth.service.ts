@@ -4,11 +4,11 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthInput } from './auth.input';
 import { hash } from 'argon2';
-import { IAuthTokenData } from './auth.interface';
 import { UsersService } from 'src/users/users.service';
 import { verify } from 'argon2';
 import { Response } from 'express';
 import { isDev } from 'src/utils/is.dev.utils';
+import type { TAuthTokenData } from './auth.interface';
 
 @Injectable()
 export class AuthService {
@@ -69,7 +69,7 @@ export class AuthService {
     }
 
     async getNewTokens(refreshToken: string) {
-        const result = await this.jwt.verifyAsync<Pick<IAuthTokenData, 'id'>>(refreshToken)
+        const result = await this.jwt.verifyAsync<Pick<TAuthTokenData, 'id'>>(refreshToken)
         if(!result) throw new BadRequestException('Invalid refresh token')
 
         const user = await this.usersService.findById(result.id)
@@ -107,7 +107,7 @@ export class AuthService {
         return user
     }
 
-    private generateTokens(data: IAuthTokenData) {
+    private generateTokens(data: TAuthTokenData) {
         const accessToken = this.jwt.sign(data, {
             expiresIn: '1h',
         })

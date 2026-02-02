@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { hash } from 'argon2';
-import type { UserUpdateInput } from 'prisma/generated/prisma/user/user-update.input';
+import type { UserUpdateInput } from 'prisma/generated/graphql/user';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()

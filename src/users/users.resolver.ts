@@ -1,12 +1,10 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UsersService } from './users.service';
-import { UserProfileModel } from './models/user-profile.model';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { Role } from '@prisma/client';
-import { Profile } from 'prisma/generated/prisma/profile/profile.model';
-import { User } from 'prisma/generated/prisma/user/user.model';
-import { UserUpdateInput } from 'prisma/generated/prisma/user/user-update.input';
+import { User, UserUpdateInput } from 'prisma/generated/graphql/user';
+
 
 @Resolver()
 export class UsersResolver {
