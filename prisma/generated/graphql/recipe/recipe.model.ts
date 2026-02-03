@@ -40,7 +40,7 @@ export class Recipe {
     updatedAt!: Date;
 
     @Field(() => User, {nullable:false})
-    autor?: User;
+    author?: User;
 
     @Field(() => [RecipeIngredient], {nullable:true})
     recipeIngredients?: Array<RecipeIngredient>;

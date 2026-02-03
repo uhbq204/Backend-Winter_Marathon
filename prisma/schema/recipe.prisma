@@ -7,7 +7,7 @@ model Recipe {
     cookingTime Int?  @map("cooking_time")
     difficulty Difficulty
 
-    autor User @relation(fields: [authorId], references: [id])
+    author User @relation(fields: [authorId], references: [id])
     authorId String @map("author_id")
 
     recipeIngredients RecipeIngredient[]
@@ -19,20 +19,6 @@ model Recipe {
     updatedAt DateTime @updatedAt @map("updated_at")
 
     @@map("recipes")
-}
-
-model Ingredient {
-    id String @id @default(cuid())
-
-    name String
-    defaultUnit Unit @map("default_unit")
-
-    recipes RecipeIngredient[]
-
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
-
-    @@map("ingredients")
 }
 
 model RecipeIngredient {
@@ -74,15 +60,6 @@ model RecipeStep {
     updatedAt DateTime @updatedAt @map("updated_at")
 
     @@map("recipe_steps")
-}
-
-enum Unit {
-    GRAM
-    MILLILITER
-    PIECE
-    TEASPOON
-    TABLESPOON
-    CLOVES
 }
 
 enum Difficulty {

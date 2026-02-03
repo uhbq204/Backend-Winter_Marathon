@@ -3,7 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { Role } from '../prisma/role.enum';
 import { ProfileUpdateOneWithoutUserNestedInput } from '../profile/profile-update-one-without-user-nested.input';
 import { BodyMeasurementUpdateOneWithoutUserNestedInput } from '../body-measurement/body-measurement-update-one-without-user-nested.input';
-import { RecipeUpdateManyWithoutAutorNestedInput } from '../recipe/recipe-update-many-without-autor-nested.input';
+import { RecipeUpdateManyWithoutAuthorNestedInput } from '../recipe/recipe-update-many-without-author-nested.input';
 import { LikeUpdateManyWithoutUserNestedInput } from '../like/like-update-many-without-user-nested.input';
 import { OrderUpdateManyWithoutUserNestedInput } from '../order/order-update-many-without-user-nested.input';
 
@@ -34,8 +34,8 @@ export class UserUpdateWithoutCommentsInput {
     @Field(() => BodyMeasurementUpdateOneWithoutUserNestedInput, {nullable:true})
     measurements?: BodyMeasurementUpdateOneWithoutUserNestedInput;
 
-    @Field(() => RecipeUpdateManyWithoutAutorNestedInput, {nullable:true})
-    recipes?: RecipeUpdateManyWithoutAutorNestedInput;
+    @Field(() => RecipeUpdateManyWithoutAuthorNestedInput, {nullable:true})
+    recipes?: RecipeUpdateManyWithoutAuthorNestedInput;
 
     @Field(() => LikeUpdateManyWithoutUserNestedInput, {nullable:true})
     likes?: LikeUpdateManyWithoutUserNestedInput;

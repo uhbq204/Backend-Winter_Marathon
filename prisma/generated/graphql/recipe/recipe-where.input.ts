@@ -50,7 +50,7 @@ export class RecipeWhereInput {
     updatedAt?: DateTimeFilter;
 
     @Field(() => UserScalarRelationFilter, {nullable:true})
-    autor?: UserScalarRelationFilter;
+    author?: UserScalarRelationFilter;
 
     @Field(() => RecipeIngredientListRelationFilter, {nullable:true})
     recipeIngredients?: RecipeIngredientListRelationFilter;

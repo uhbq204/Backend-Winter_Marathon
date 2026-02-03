@@ -35,7 +35,7 @@ export class RecipeCreateWithoutRecipeIngredientsInput {
     updatedAt?: Date | string;
 
     @Field(() => UserCreateNestedOneWithoutRecipesInput, {nullable:false})
-    autor!: UserCreateNestedOneWithoutRecipesInput;
+    author!: UserCreateNestedOneWithoutRecipesInput;
 
     @Field(() => RecipeStepCreateNestedManyWithoutRecipeInput, {nullable:true})
     recipeSteps?: RecipeStepCreateNestedManyWithoutRecipeInput;

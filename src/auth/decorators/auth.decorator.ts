@@ -5,7 +5,7 @@ import { AdminGuard } from "../guards/admin.guard";
 
 export const Auth = (role: Role = Role.USER) => {
     if (role === Role.ADMIN){
-        return applyDecorators(UseGuards(AdminGuard, GqlAuthGuard))
+        return applyDecorators(UseGuards(GqlAuthGuard, AdminGuard))
     }
 
     return applyDecorators(UseGuards(GqlAuthGuard))

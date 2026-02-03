@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { hash } from 'argon2';
-import type { UserUpdateInput } from 'prisma/generated/graphql/user';
 import { PrismaService } from 'src/prisma/prisma.service';
+import type { UserUpdateCustomInput } from './inputs/user-update.input';
 
 @Injectable()
 export class UsersService {
@@ -35,7 +35,7 @@ export class UsersService {
         })
     }
 
-    async updateProfile(id: string, input: UserUpdateInput) {
+    async updateProfile(id: string, input: UserUpdateCustomInput) {
     const {profile, measurements, password, ...data} = input
 
     const updateProfile: Prisma.XOR<

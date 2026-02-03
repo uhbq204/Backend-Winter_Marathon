@@ -35,7 +35,7 @@ export class RecipeUpdateWithoutCommentsInput {
     updatedAt?: Date | string;
 
     @Field(() => UserUpdateOneRequiredWithoutRecipesNestedInput, {nullable:true})
-    autor?: UserUpdateOneRequiredWithoutRecipesNestedInput;
+    author?: UserUpdateOneRequiredWithoutRecipesNestedInput;
 
     @Field(() => RecipeIngredientUpdateManyWithoutRecipeNestedInput, {nullable:true})
     recipeIngredients?: RecipeIngredientUpdateManyWithoutRecipeNestedInput;

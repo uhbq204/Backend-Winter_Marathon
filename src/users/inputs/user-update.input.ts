@@ -1,19 +1,18 @@
-import { Field, InputType } from "@nestjs/graphql"
-import { BodyMeasurementUpdateWithoutUserInput } from "prisma/generated/graphql/body-measurement"
-import { ProfileUpdateWithoutUserInput } from "prisma/generated/graphql/profile"
-import type { UserUpdateInput } from "prisma/generated/graphql/user"
+import { Field, InputType } from '@nestjs/graphql';
+import { ProfilePatchInput } from './profile-update.input';
+import { BodyMeasurementPatchInput } from './body-measurement-update.input';
 
 @InputType()
-export class UserUpdateCustomInput implements Partial<UserUpdateInput> {
-    @Field(() => String, { nullable: true })
-    email?: string
+export class UserUpdateCustomInput {
+  @Field(() => String, { nullable: true })
+  email?: string;
 
-    @Field(() => String, { nullable: true })
-    password?: string
+  @Field(() => String, { nullable: true })
+  password?: string;
 
-    @Field(() => ProfileUpdateWithoutUserInput, { nullable: true })
-    profileUpdate?: ProfileUpdateWithoutUserInput
+  @Field(() => ProfilePatchInput, { nullable: true })
+  profile?: ProfilePatchInput;
 
-    @Field(() => BodyMeasurementUpdateWithoutUserInput, { nullable: true })
-    bodyMeasurement?: BodyMeasurementUpdateWithoutUserInput
+  @Field(() => BodyMeasurementPatchInput, { nullable: true })
+  measurements?: BodyMeasurementPatchInput;
 }

@@ -3,7 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { Role } from '../prisma/role.enum';
 import { ProfileUncheckedUpdateOneWithoutUserNestedInput } from '../profile/profile-unchecked-update-one-without-user-nested.input';
 import { BodyMeasurementUncheckedUpdateOneWithoutUserNestedInput } from '../body-measurement/body-measurement-unchecked-update-one-without-user-nested.input';
-import { RecipeUncheckedUpdateManyWithoutAutorNestedInput } from '../recipe/recipe-unchecked-update-many-without-autor-nested.input';
+import { RecipeUncheckedUpdateManyWithoutAuthorNestedInput } from '../recipe/recipe-unchecked-update-many-without-author-nested.input';
 import { CommentUncheckedUpdateManyWithoutAutorNestedInput } from '../comment/comment-unchecked-update-many-without-autor-nested.input';
 import { OrderUncheckedUpdateManyWithoutUserNestedInput } from '../order/order-unchecked-update-many-without-user-nested.input';
 
@@ -34,8 +34,8 @@ export class UserUncheckedUpdateWithoutLikesInput {
     @Field(() => BodyMeasurementUncheckedUpdateOneWithoutUserNestedInput, {nullable:true})
     measurements?: BodyMeasurementUncheckedUpdateOneWithoutUserNestedInput;
 
-    @Field(() => RecipeUncheckedUpdateManyWithoutAutorNestedInput, {nullable:true})
-    recipes?: RecipeUncheckedUpdateManyWithoutAutorNestedInput;
+    @Field(() => RecipeUncheckedUpdateManyWithoutAuthorNestedInput, {nullable:true})
+    recipes?: RecipeUncheckedUpdateManyWithoutAuthorNestedInput;
 
     @Field(() => CommentUncheckedUpdateManyWithoutAutorNestedInput, {nullable:true})
     comments?: CommentUncheckedUpdateManyWithoutAutorNestedInput;

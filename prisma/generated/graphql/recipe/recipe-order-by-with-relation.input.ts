@@ -39,7 +39,7 @@ export class RecipeOrderByWithRelationInput {
     updatedAt?: `${SortOrder}`;
 
     @Field(() => UserOrderByWithRelationInput, {nullable:true})
-    autor?: UserOrderByWithRelationInput;
+    author?: UserOrderByWithRelationInput;
 
     @Field(() => RecipeIngredientOrderByRelationAggregateInput, {nullable:true})
     recipeIngredients?: RecipeIngredientOrderByRelationAggregateInput;

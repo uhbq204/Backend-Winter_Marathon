@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Role } from '../prisma/role.enum';
 import { ProfileUncheckedCreateNestedOneWithoutUserInput } from '../profile/profile-unchecked-create-nested-one-without-user.input';
-import { RecipeUncheckedCreateNestedManyWithoutAutorInput } from '../recipe/recipe-unchecked-create-nested-many-without-autor.input';
+import { RecipeUncheckedCreateNestedManyWithoutAuthorInput } from '../recipe/recipe-unchecked-create-nested-many-without-author.input';
 import { CommentUncheckedCreateNestedManyWithoutAutorInput } from '../comment/comment-unchecked-create-nested-many-without-autor.input';
 import { LikeUncheckedCreateNestedManyWithoutUserInput } from '../like/like-unchecked-create-nested-many-without-user.input';
 import { OrderUncheckedCreateNestedManyWithoutUserInput } from '../order/order-unchecked-create-nested-many-without-user.input';
@@ -31,8 +31,8 @@ export class UserUncheckedCreateWithoutMeasurementsInput {
     @Field(() => ProfileUncheckedCreateNestedOneWithoutUserInput, {nullable:true})
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput;
 
-    @Field(() => RecipeUncheckedCreateNestedManyWithoutAutorInput, {nullable:true})
-    recipes?: RecipeUncheckedCreateNestedManyWithoutAutorInput;
+    @Field(() => RecipeUncheckedCreateNestedManyWithoutAuthorInput, {nullable:true})
+    recipes?: RecipeUncheckedCreateNestedManyWithoutAuthorInput;
 
     @Field(() => CommentUncheckedCreateNestedManyWithoutAutorInput, {nullable:true})
     comments?: CommentUncheckedCreateNestedManyWithoutAutorInput;
