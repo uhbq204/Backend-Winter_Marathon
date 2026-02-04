@@ -15,6 +15,9 @@ export class RecipeOrderByWithRelationInput {
     id?: `${SortOrder}`;
 
     @Field(() => SortOrder, {nullable:true})
+    slug?: `${SortOrder}`;
+
+    @Field(() => SortOrder, {nullable:true})
     title?: `${SortOrder}`;
 
     @Field(() => SortOrderInput, {nullable:true})

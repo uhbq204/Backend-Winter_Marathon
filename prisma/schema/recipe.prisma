@@ -1,6 +1,7 @@
 model Recipe {
     id String @id @default(cuid())
 
+    slug String @unique
     title String
     description String?
     calories Int?
@@ -10,8 +11,12 @@ model Recipe {
     author User @relation(fields: [authorId], references: [id])
     authorId String @map("author_id")
 
+    nutritionFact NutritionFact?
+
     recipeIngredients RecipeIngredient[]
     recipeSteps RecipeStep[]
+    tags RecipeTag[]
+
     comments Comment[]
     likes Like[]
 
@@ -24,12 +29,8 @@ model Recipe {
 model RecipeIngredient {
     id String @id @default(cuid())
 
-    name String
-    iconUrl String @map("icon_url")
-    content String
-    quantity Float
-    unit Unit
-    price String
+    quantity Decimal
+    unit Unit @default(GRAM)
 
     recipe Recipe @relation(fields: [recipeId], references: [id])
     recipeId String @map("recipe_id")
@@ -60,6 +61,36 @@ model RecipeStep {
     updatedAt DateTime @updatedAt @map("updated_at")
 
     @@map("recipe_steps")
+}
+
+model NutritionFact {
+    id String @id @default(cuid())
+
+    proteins Decimal
+    fats Decimal
+    carbohydrates Decimal
+    fibers Decimal
+
+    recipe Recipe @relation(fields: [recipeId], references: [id])
+    recipeId String @map("recipe_id") @unique
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@map("nutrition_facts")
+}
+
+model RecipeTag {
+    id String @id @default(cuid())
+
+    name String @unique
+
+    recipes Recipe[]
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@map("recipe_tags")
 }
 
 enum Difficulty {

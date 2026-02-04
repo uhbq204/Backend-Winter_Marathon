@@ -17,6 +17,9 @@ export class RecipeWhereUniqueInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
+    @Field(() => String, {nullable:true})
+    slug?: string;
+
     @Field(() => [RecipeWhereInput], {nullable:true})
     AND?: Array<RecipeWhereInput>;
 

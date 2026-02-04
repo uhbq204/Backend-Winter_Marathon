@@ -26,6 +26,9 @@ export class RecipeWhereInput {
     id?: StringFilter;
 
     @Field(() => StringFilter, {nullable:true})
+    slug?: StringFilter;
+
+    @Field(() => StringFilter, {nullable:true})
     title?: StringFilter;
 
     @Field(() => StringFilter, {nullable:true})

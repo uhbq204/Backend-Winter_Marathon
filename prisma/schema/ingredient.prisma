@@ -2,6 +2,9 @@ model Ingredient {
     id String @id @default(cuid())
 
     name String
+    iconUrl String? @map("icon_url")
+    content String?
+
     defaultUnit Unit? @default(GRAM) @map("default_unit")
 
     recipesIngredients RecipeIngredient[]
