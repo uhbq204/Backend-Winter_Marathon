@@ -15,7 +15,11 @@ export class RecipesService {
             where: { slug },
             include: {
                 recipeSteps: true,
-                recipeIngredients: true
+                recipeIngredients: {
+                    include: {
+                        ingredient: true
+                    }
+                }
             }
         })
     

@@ -29,7 +29,7 @@ model Recipe {
 model RecipeIngredient {
     id String @id @default(cuid())
 
-    quantity Decimal
+    quantity Decimal?
     unit Unit @default(GRAM)
 
     recipe Recipe @relation(fields: [recipeId], references: [id])
