@@ -6,5 +6,6 @@ import { IngredientsService } from './ingredients.service';
 @Module({
   imports: [PrismaModule],
   providers: [IngredientsResolver, IngredientsService],
+  exports: [IngredientsService],
 })
 export class IngredientsModule {}

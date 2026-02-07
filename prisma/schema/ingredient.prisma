@@ -4,6 +4,7 @@ model Ingredient {
     name String
     iconUrl String? @map("icon_url")
     content String?
+    price Decimal
 
     defaultUnit Unit? @default(GRAM) @map("default_unit")
 

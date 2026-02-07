@@ -6,7 +6,7 @@ model Comment {
     recipe Recipe @relation(fields: [recipeId], references: [id])
     recipeId String @map("recipe_id")
 
-    autor User @relation(fields: [authorId], references: [id])
+    author User @relation(fields: [authorId], references: [id])
     authorId String @map("author_id")
 
     @@map("comments")

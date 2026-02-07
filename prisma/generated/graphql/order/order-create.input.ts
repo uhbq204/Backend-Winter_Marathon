@@ -23,4 +23,5 @@ export class OrderCreateInput {
 
     @Field(() => UserCreateNestedOneWithoutOrdersInput, {nullable:false})
     user!: UserCreateNestedOneWithoutOrdersInput;
+    items: any;
 }
