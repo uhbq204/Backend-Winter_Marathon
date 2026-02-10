@@ -1,7 +1,8 @@
-import { Field, ID, InputType, Int } from "@nestjs/graphql";
+import { Field, InputType, Int } from "@nestjs/graphql";
 import { Difficulty } from "@prisma/client";
 import { NutritionFactUpdateInput } from "./nutrition-fact.input";
 import { RecipeStepInput } from "./step.input";
+import { RecipeIngredientInput } from "./recipe-ingredient.input";
 
 @InputType()
 export class RecipeCreateInput {
@@ -32,6 +33,6 @@ export class RecipeCreateInput {
     @Field(() => [RecipeStepInput], { nullable: true })
     recipeSteps?: RecipeStepInput[]
 
-    @Field(() => [ID], { nullable: true })
-    ingredientIds?: string[]
+    @Field(() => [RecipeIngredientInput], { nullable: true })
+    ingredients?: RecipeIngredientInput[]
 }

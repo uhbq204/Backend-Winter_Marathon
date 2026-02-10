@@ -4,117 +4,119 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AdminRecipesService {
-     constructor(private readonly prisma: PrismaService) {}
+    constructor(private readonly prisma: PrismaService) {}
     
-        getAll() {
-            return this.prisma.recipe.findMany()
+    getAll() {
+        return this.prisma.recipe.findMany()
+    }
+    
+    async getById(id: string) {
+        const recipe = await this.prisma.recipe.findUnique({
+            where: { id }
+        })
+    
+        if (!recipe) {
+            throw new NotFoundException(`Recipe with ID ${id} not found`)
         }
     
-        async getById(id: string) {
-            const recipe = await this.prisma.recipe.findUnique({
-                where: { id }
-            })
+        return recipe
+    }
     
-            if (!recipe) {
-                throw new NotFoundException(`Recipe with ID ${id} not found`)
+    create(authorId:string, {recipeSteps, nutritionFact, ingredients, tags, ...data}: RecipeCreateInput) {
+
+        return this.prisma.recipe.create({
+            data: {
+                ...data,
+                author: {
+                    connect: { id: authorId }
+                },
+                ...(!!nutritionFact && { 
+                    nutritionFact: {
+                        create: nutritionFact       
+                    }
+                }),
+                recipeSteps: {
+                    create: recipeSteps
+                },
+                ...(!!ingredients?.length && {
+                    recipeIngredients: {
+                        create: ingredients.map((item, index) => ({
+                            ingredient: item.ingredientId,
+                            quantity: item.quantity,
+                            unit: item.unit,
+                            order: index
+                        }))
+                    }
+                }),
+                ...(!!tags?.length && {
+                    tags: {
+                        connectOrCreate: tags.map((tag) => ({
+                            where: { name: tag },
+                            create: { name: tag }
+                        }))
+                    }
+                })
             }
+        })
+    }
     
-            return recipe
-        }
-    
-        create(authorId:string, {recipeSteps, nutritionFact, ingredientIds, tags, ...data}: RecipeCreateInput) {
+    update(id: string, {
+        recipeSteps,
+        nutritionFact,
+        ingredients,
+        tags,
+        ...data
+    }: RecipeCreateInput) {
 
-            return this.prisma.recipe.create({
-                data: {
-                    ...data,
-                    author: {
-                        connect: { id: authorId }
-                    },
-                    ...(!!nutritionFact && { 
-                        nutritionFact: {
-                            create: nutritionFact       
+        return this.prisma.recipe.update({
+            where: { id },
+            data: {
+                ...data,
+                ...(nutritionFact && {
+                    nutritionFact: {
+                        upsert: {
+                            create: nutritionFact,
+                            update: nutritionFact
                         }
-                    }),
+                    }
+                }),
+                ...(recipeSteps && {
                     recipeSteps: {
-                        create: recipeSteps
-                    },
-                    ...(!!ingredientIds?.length && {
-                        recipeIngredients: {
-                            create: ingredientIds.map((ingredientId, index) => ({
-                                ingredientId,
-                                quantity: 1,
-                                order: index
-                            }))
-                        }
-                    }),
-                    ...(!!tags?.length && {
-                        tags: {
-                            connectOrCreate: tags.map((tag) => ({
-                                where: { name: tag },
-                                create: { name: tag }
-                            }))
-                        }
-                    })
-                }
-            })
-        }
+                        deleteMany: {},
+                        create: recipeSteps.map(step => ({
+                            order: step.order,
+                            title: step.title,
+                            description: step.description
+                        }))
+                    }
+                }),
+                ...(ingredients?.length && {
+                    recipeIngredients: {
+                        deleteMany: {},
+                        create: ingredients.map((item, index) => ({
+                            ingredient: item.ingredientId,
+                            quantity: item.quantity,
+                            unit: item.unit,
+                            order: index
+                        }))
+                    }
+                }),
+                ...(tags && {
+                    tags: {
+                        set: [],
+                        connectOrCreate: tags.map(tagName => ({
+                            where: { name: tagName },
+                            create: { name: tagName }
+                        }))
+                    }
+                })
+            }
+        })
+    }
     
-        update(id: string, {
-            recipeSteps,
-            nutritionFact,
-            ingredientIds,
-            tags,
-            ...data
-        }: RecipeCreateInput) {
-
-            return this.prisma.recipe.update({
-                where: { id },
-                data: {
-                    ...data,
-                    ...(nutritionFact && {
-                        nutritionFact: {
-                            upsert: {
-                                create: nutritionFact,
-                                update: nutritionFact
-                            }
-                        }
-                    }),
-                    ...(recipeSteps && {
-                        recipeSteps: {
-                            deleteMany: {},
-                            create: recipeSteps.map(step => ({
-                                order: step.order,
-                                title: step.title,
-                                description: step.description
-                            }))
-                        }
-                    }),
-                    ...(ingredientIds?.length && {
-                        recipeIngredients: {
-                            deleteMany: {},
-                            create: ingredientIds.map((ingredientId, index) => ({
-                                ingredientId,
-                                quantity: 1,
-                                order: index
-                            }))
-                        }
-                    }),
-                    ...(tags && {
-                        tags: {
-                            set: [],
-                            connectOrCreate: tags.map(tagName => ({
-                                where: { name: tagName },
-                                create: { name: tagName }
-                            }))
-                        }
-                    })
-                }
-            })
-        }
-    
-        deleteById(id: string) {
-            return this.prisma.recipe.delete({
-                where: { id }
-            })
-        }
+    deleteById(id: string) {
+        return this.prisma.recipe.delete({
+            where: { id }
+        })
+    }
 }
