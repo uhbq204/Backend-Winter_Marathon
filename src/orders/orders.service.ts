@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { type OrderCreateInput } from 'prisma/generated/graphql/order';
-import type { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { OrderStatus } from './enums';
-import type { CreateOrderInput } from './inputs/order.input';
+import { CreateOrderInput, OrderCreateInput } from './inputs/order.input';
 
 @Injectable()
 export class OrdersService {

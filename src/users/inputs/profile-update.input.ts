@@ -1,5 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { Gender } from 'prisma/generated/graphql/prisma/gender.enum';
+import { Gender } from '@prisma/client';
 
 @InputType()
 export class ProfilePatchInput {

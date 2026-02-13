@@ -1,5 +1,5 @@
 import { Field, InputType, Int } from "@nestjs/graphql";
-import { Difficulty } from "@prisma/client";
+import { Difficulty } from "../recipe.enum";
 import { NutritionFactUpdateInput } from "./nutrition-fact.input";
 import { RecipeStepInput } from "./step.input";
 import { RecipeIngredientInput } from "./recipe-ingredient.input";
@@ -22,12 +22,12 @@ export class RecipeCreateInput {
     cookingTime!: number
 
     @Field(() => Difficulty, { nullable: false })
-    difficulty!: `${Difficulty}`
+    difficulty!: Difficulty
 
     @Field(() => NutritionFactUpdateInput, { nullable: true })
-    nutritionFact!: NutritionFactUpdateInput
+    nutritionFact?: NutritionFactUpdateInput
 
-    @Field(() => String, { nullable: true })
+    @Field(() => [String], { nullable: true })
     tags!: string[]
 
     @Field(() => [RecipeStepInput], { nullable: true })

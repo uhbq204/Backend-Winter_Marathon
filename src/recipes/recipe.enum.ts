@@ -8,8 +8,7 @@ export enum Difficulty {
 }
 
 registerEnumType(Difficulty, {
-    name: 'Difficulty',
-    description: undefined
+    name: 'Difficulty'
 })
 
 export enum Unit {
@@ -22,6 +21,5 @@ export enum Unit {
 }
 
 registerEnumType(Unit, {
-    name: 'Unit',
-    description: undefined
+    name: 'Unit'
 })

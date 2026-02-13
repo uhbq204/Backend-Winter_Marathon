@@ -8,6 +8,7 @@ import { UsersModule } from 'src/users/users.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
+import './auth.enum';
 
 @Module({
   imports: [

@@ -2,10 +2,10 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { ReactionService } from './reaction.service';
 import { CommentModel } from './models/comment.model';
 import { Auth } from 'src/auth/decorators/auth.decorator';
-import type { CommentCreateInput, CommentUpdateInput } from './inputs/comment.input';
+import { CommentCreateInput, CommentUpdateInput } from './inputs/comment.input';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import type { Role } from 'prisma/generated/graphql/prisma';
 import { ToggleLikeResponse } from './models/toggle-like.response';
+import { Role } from '@prisma/client';
 
 @Resolver()
 export class ReactionResolver {
@@ -15,7 +15,7 @@ export class ReactionResolver {
   @Auth()
   createComment(
     @CurrentUser('id') userId: string,
-    @Args('input') input: CommentCreateInput
+    @Args('input', { type: () => CommentCreateInput }) input: CommentCreateInput
   ) {
     return this.reactionService.createComment(userId, input)
   }
@@ -26,7 +26,7 @@ export class ReactionResolver {
     @CurrentUser('id') userId: string,
     @CurrentUser('role') userRole: Role,
     @Args('commentId') commentId: string,
-    @Args('input') input: CommentUpdateInput
+    @Args('input', { type: () => CommentUpdateInput }) input: CommentUpdateInput
   ) {
     return this.reactionService.updateComment(userId, userRole, commentId, input)
   }

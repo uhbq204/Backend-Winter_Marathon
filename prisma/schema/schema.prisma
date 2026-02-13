@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  mooduleFormat = "cjs"
+  moduleFormat = "cjs"
 }
 
 // generator nestgraphql {

@@ -1,6 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { ActivityLevel } from 'prisma/generated/graphql/prisma/activity-level.enum';
-import { NutritionGoal } from 'prisma/generated/graphql/prisma/nutrition-goal.enum';
+import { ActivityLevel, NutritionGoal } from '@prisma/client';
 
 @InputType()
 export class BodyMeasurementPatchInput {

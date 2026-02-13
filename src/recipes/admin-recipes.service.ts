@@ -1,6 +1,30 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { RecipeCreateInput } from './inputs/recipe.input';
 import { PrismaService } from 'src/prisma/prisma.service';
+import type { Prisma } from '@prisma/client';
+import { NutritionFactUpdateInput } from './inputs/nutrition-fact.input';
+
+function toNutritionFactCreate(
+  input: NutritionFactUpdateInput
+): Prisma.NutritionFactCreateWithoutRecipeInput {
+  return {
+    proteins: input.protein,
+    fats: input.fats,
+    carbohydrates: input.carbohydrates,
+    fibers: input.fiber,
+  };
+}
+
+function toNutritionFactUpdate(
+  input: NutritionFactUpdateInput
+): Prisma.NutritionFactUpdateWithoutRecipeInput {
+  return {
+    proteins: input.protein,
+    fats: input.fats,
+    carbohydrates: input.carbohydrates,
+    fibers: input.fiber,
+  };
+}
 
 @Injectable()
 export class AdminRecipesService {
@@ -32,7 +56,7 @@ export class AdminRecipesService {
                 },
                 ...(!!nutritionFact && { 
                     nutritionFact: {
-                        create: nutritionFact       
+                        create: toNutritionFactCreate(nutritionFact)      
                     }
                 }),
                 recipeSteps: {
@@ -41,7 +65,7 @@ export class AdminRecipesService {
                 ...(!!ingredients?.length && {
                     recipeIngredients: {
                         create: ingredients.map((item, index) => ({
-                            ingredient: item.ingredientId,
+                            ingredient: { connect: { id: item.ingredientId } },
                             quantity: item.quantity,
                             unit: item.unit,
                             order: index
@@ -75,8 +99,8 @@ export class AdminRecipesService {
                 ...(nutritionFact && {
                     nutritionFact: {
                         upsert: {
-                            create: nutritionFact,
-                            update: nutritionFact
+                            create: toNutritionFactCreate(nutritionFact),
+                            update: toNutritionFactUpdate(nutritionFact)
                         }
                     }
                 }),
@@ -94,7 +118,7 @@ export class AdminRecipesService {
                     recipeIngredients: {
                         deleteMany: {},
                         create: ingredients.map((item, index) => ({
-                            ingredient: item.ingredientId,
+                            ingredient: { connect: { id: item.ingredientId } },
                             quantity: item.quantity,
                             unit: item.unit,
                             order: index

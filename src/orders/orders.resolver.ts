@@ -3,7 +3,7 @@ import { OrdersService } from './orders.service';
 import { OrderModel } from './models/order.model';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import type { CreateOrderInput } from './inputs/order.input';
+import { CreateOrderInput } from './inputs/order.input';
 
 
 @Resolver()

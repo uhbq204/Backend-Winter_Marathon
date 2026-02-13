@@ -4,7 +4,7 @@ import { NutritionFact } from "./nutrition-fact.model";
 import { RecipeTagModel } from "./recipe-tag.model";
 import { RecipeStepModel } from "./recipe-step.model";
 import { RecipeIngredientModel } from "./recipe-ingredient.model";
-import { User } from "prisma/generated/graphql/user";
+import { UserModel } from "src/users/models/user.model";
 
 @ObjectType()
 export class RecipeModel {
@@ -27,7 +27,7 @@ export class RecipeModel {
     cookingTime!: number
 
     @Field(() => Difficulty, { nullable: false })
-    difficulty!: `${Difficulty}`
+    difficulty!: Difficulty
 
     @Field(() => String, { nullable: true })
     authorId!: string
@@ -38,8 +38,8 @@ export class RecipeModel {
     @Field(() => Date, { nullable: false })
     updatedAt!: Date
 
-    @Field(() => User, { nullable: false })
-    author?: User
+    @Field(() => UserModel, { nullable: false })
+    author?: UserModel
 
     @Field(() => NutritionFact, { nullable: true })
     nutritionFact?: NutritionFact | null

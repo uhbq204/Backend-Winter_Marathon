@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import type { PrismaService } from 'src/prisma/prisma.service';
-import type { CommentCreateInput, CommentUpdateInput } from './inputs/comment.input';
-import { Role } from 'prisma/generated/graphql/prisma';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CommentCreateInput, CommentUpdateInput } from './inputs/comment.input';
+import { Role } from '@prisma/client';
 
 @Injectable()
 export class ReactionService {
