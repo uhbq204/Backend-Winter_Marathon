@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { getGraphQLConfig } from './config/graphql.config';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { getGraphQLConfig } from './config/graphql.config';
     UsersModule,
     RecipesModule,
     OrdersModule,
-    PrismaModule
+    PrismaModule,
+    EmailModule
   ],
   controllers: [AppController],
   providers: [AppService],
