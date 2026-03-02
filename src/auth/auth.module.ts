@@ -7,12 +7,14 @@ import { getJwtConfig } from 'src/config/jwt.config';
 import { UsersModule } from 'src/users/users.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
-import { AuthService } from './auth.service';
 import './auth.enum';
 import { getTurnstileConfig } from 'src/config/turnstile.config';
 import { TurnstileModule } from 'nestjs-cloudflare-turnstile';
 import { GqlTurnstileGuard } from './guards/gql-turnstile.guard';
 import { ResendModule } from 'nestjs-resend';
+import { EmailModule } from 'src/email/email.module';
+import { AuthAccountService } from './auth-account.service';
+import { AuthService } from './auth.service';
 
 @Module({
   imports: [
@@ -36,9 +38,10 @@ import { ResendModule } from 'nestjs-resend';
       }),
       inject: [ConfigService],
     }),
-    UsersModule
+    UsersModule,
+    EmailModule
   ],
-  providers: [JwtStrategy, AuthService, AuthResolver, GqlTurnstileGuard],
+  providers: [JwtStrategy, AuthService, AuthAccountService, AuthResolver, GqlTurnstileGuard],
   exports: [GqlTurnstileGuard],
 })
 export class AuthModule {}

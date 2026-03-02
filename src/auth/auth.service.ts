@@ -8,7 +8,9 @@ import { UsersService } from 'src/users/users.service';
 import { verify } from 'argon2';
 import { Response } from 'express';
 import { isDev } from 'src/utils/is.dev.utils';
-import type { TAuthTokenData } from './auth.interface';
+import { TAuthTokenData } from './auth.interface';
+import { generateToken } from 'src/utils/generate-token.util';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +18,8 @@ export class AuthService {
         private prisma: PrismaService,
         private configService: ConfigService,
         private jwt: JwtService,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private emailService: EmailService
     ) {}
 
     private readonly EXPIRE_HOURS_ACCESS_TOKEN = 1
@@ -41,10 +44,14 @@ export class AuthService {
                 throw new BadRequestException('User with this email already exists')
             }
 
+            const emailVerificationToken = generateToken()
+
             const user = await this.prisma.user.create({
                 data: {
                     email: email,
-                    password: (await hash(input.password))
+                    password: (await hash(input.password)),
+                    emailVerificationToken,
+                    emailVerificationTokenExpiresAt: new Date(Date.now() + 3600000)
                 }
             })
 
@@ -52,6 +59,10 @@ export class AuthService {
                 id: user.id,
                 role: user.role
             })
+
+            const verificationUrl = `${this.configService.get('FRONTEND_URL')}/verify-email?token=${emailVerificationToken}`
+
+            await this.emailService.sendVerificationEmail(user.email, verificationUrl)
 
             return { user, ...tokens }
 
@@ -168,5 +179,3 @@ export class AuthService {
         })
     }
 }
-
-
