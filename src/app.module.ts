@@ -11,6 +11,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { getGraphQLConfig } from './config/graphql.config';
 import { EmailModule } from './email/email.module';
+import { MediaUploadModule } from './media-upload/media-upload.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { EmailModule } from './email/email.module';
     RecipesModule,
     OrdersModule,
     PrismaModule,
-    EmailModule
+    EmailModule,
+    MediaUploadModule
   ],
   controllers: [AppController],
   providers: [AppService],
