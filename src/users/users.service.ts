@@ -78,7 +78,8 @@ export class UsersService {
                 ...hashedPassword,
                 ...updateProfile,
                 ...updateMeasurements,
-                email: data.email
+                email: data.email,
+                avatarUrl: data.avatarUrl
             },
             include: {
                 measurements: true,

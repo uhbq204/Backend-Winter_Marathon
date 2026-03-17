@@ -21,7 +21,7 @@ export class UsersResolver {
   @Auth()
   updateProfile(
     @CurrentUser('id') id: string, 
-    @Args('input', { type: () => UserUpdateCustomInput }) input: UserUpdateCustomInput) {
+    @Args('data', { type: () => UserUpdateCustomInput }) input: UserUpdateCustomInput) {
     return this.usersService.updateProfile(id, input)
   }
 

@@ -24,7 +24,8 @@ export class MediaUploadService {
 
         await writeFile(`${uploadFolder}/${name}`, file.buffer)
        
-        const url = `/uploads/${folder}/${name}`
+        const baseUrl = process.env.SERVER_URL || 'http://localhost:3200';
+        const url = `${baseUrl}/uploads/${folder}/${name}`;
 
         return { url, name }
     }
