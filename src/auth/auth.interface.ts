@@ -14,5 +14,5 @@ export type TRequestWithUser = {
 @ObjectType()
 export class AuthResponse {
     @Field(() => UserModel)
-    user: UserModel
+    user!: UserModel;
 }

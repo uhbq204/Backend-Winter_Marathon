@@ -4,11 +4,11 @@ import { Unit } from "../recipe.enum";
 @InputType()
 export class RecipeIngredientInput {
     @Field(() => ID)
-    ingredientId: string
+    ingredientId!: string;
 
     @Field(() => Number)
-    quantity: number
+    quantity!: number;
 
     @Field(() => Unit)
-    unit: Unit
+    unit!: Unit;
 }

@@ -1,16 +1,18 @@
 import { Field, Float, InputType } from "@nestjs/graphql";
+import { DecimalJsLike } from "@prisma/client/runtime/client";
 
 @InputType()
 export class NutritionFactUpdateInput {
+    [x: string]: string | number | DecimalJsLike | DecimalJsLike;
     @Field(() => Float, { nullable: false })
-    protein: number;
+    proteins!: number;
 
     @Field(() => Float, { nullable: false })
-    fats: number;
+    fats!: number;
 
     @Field(() => Float, { nullable: false })
-    carbohydrates: number;
+    carbohydrates!: number;
     
     @Field(() => Float, { nullable: false })
-    fiber: number;
+    fiber!: number;
 }

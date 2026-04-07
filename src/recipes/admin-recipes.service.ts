@@ -8,10 +8,10 @@ function toNutritionFactCreate(
   input: NutritionFactUpdateInput
 ): Prisma.NutritionFactCreateWithoutRecipeInput {
   return {
-    proteins: input.protein,
+    proteins: input.proteins,
     fats: input.fats,
     carbohydrates: input.carbohydrates,
-    fibers: input.fiber,
+    fiber: input.fiber,
   };
 }
 
@@ -19,10 +19,10 @@ function toNutritionFactUpdate(
   input: NutritionFactUpdateInput
 ): Prisma.NutritionFactUpdateWithoutRecipeInput {
   return {
-    proteins: input.protein,
+    proteins: input.proteins,
     fats: input.fats,
     carbohydrates: input.carbohydrates,
-    fibers: input.fiber,
+    fiber: input.fiber,
   };
 }
 

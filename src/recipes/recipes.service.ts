@@ -1,83 +1,95 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { RecipeQueryInput } from './inputs/get-recipes-query.input';
+import { RecipesQueryInput } from './inputs/get-recipes-query.input';
 import { Prisma } from '@prisma/client';
 
 
 @Injectable()
 export class RecipesService {
-    constructor(private readonly prisma: PrismaService) {}
-    
-    async getAll({page, limit, searchTerm, sort}: RecipeQueryInput) {
-        const skip = (page - 1) * limit
+	constructor(private readonly prisma: PrismaService) {}
 
-        return this.prisma.recipe.findMany({
-            skip,
-            take: limit,
+	async getAll({
+		page,
+		limit,
+		searchTerm,
+		sort,
+		mealType,
+		dietaryPreference,
+		healthGoal,
+		cuisine,
+		specialOccasion
+	}: RecipesQueryInput) {
+		const skip = (page - 1) * limit
 
-            where: {
-                ...(searchTerm && {
-                    OR: [
-                        { title: { contains: searchTerm, mode: 'insensitive' } },
-                        { description: { contains: searchTerm, mode: 'insensitive' } },
-                        {
-                            recipeIngredients: {
-                                some: {
-                                    ingredient: {
-                                        name: { contains: searchTerm, mode: 'insensitive' }
-                                    }
-                                }
-                            }
-                        }
-                    ]
-                })
-            },
+		return this.prisma.recipe.findMany({
+			skip,
+			take: limit,
 
-            orderBy: this.getOrderBy(sort),
+			where: {
+				...(mealType && { mealType }),
+				...(dietaryPreference && { dietaryPreference }),
+				...(healthGoal && { healthGoal }),
+				...(cuisine && { cuisine }),
+				...(specialOccasion && { specialOccasion }),
+				...(searchTerm && {
+					OR: [
+						{ title: { contains: searchTerm, mode: 'insensitive' } },
+						{ description: { contains: searchTerm, mode: 'insensitive' } },
+						{
+							recipeIngredients: {
+								some: {
+									ingredient: {
+										name: { contains: searchTerm, mode: 'insensitive' }
+									}
+								}
+							}
+						}
+					]
+				})
+			},
 
-            include: {
-                _count: {
-                    select: { likes: true }
-                }
-            }
-        })
-    }
+			orderBy: this.getOrderBy(sort),
 
-    private getOrderBy(sort?: string) {
-        switch (sort) {
-            case 'recommended':
-                return {
-                    likes: { _count: Prisma.SortOrder.desc }
-                }
-            case 'popular':
-                return {
-                    views: Prisma.SortOrder.desc
-                }
-            default:
-                return {
-                    createdAt: Prisma.SortOrder.desc
-                }
-        }
-    }
+			include: {
+				_count: {
+					select: { likes: true }
+				}
+			}
+		})
+	}
 
-    async getBySlug(slug: string) {
-        const recipe = await this.prisma.recipe.findUnique({
-            where: { slug },
-            include: {
-                recipeSteps: true,
-                recipeIngredients: {
-                    include: {
-                        ingredient: true
-                    }
-                }
-            }
-        })
-    
-        if (!recipe) {
-            throw new NotFoundException(`Recipe with slug ${slug} not found`)
-        }
-    
-        return recipe
-    }
-    
+	private getOrderBy(sort?: string) {
+		switch (sort) {
+			case 'recommended':
+				return { likes: { _count: Prisma.SortOrder.desc } }
+
+			case 'popular':
+				return { views: Prisma.SortOrder.desc }
+
+			default:
+				return { createdAt: Prisma.SortOrder.desc }
+		}
+	}
+
+	async getBySlug(slug: string) {
+		const recipe = await this.prisma.recipe.findUnique({
+			where: {
+				slug
+			},
+			include: {
+				recipeSteps: true,
+				recipeIngredients: {
+					include: {
+						ingredient: true
+					}
+				}
+			}
+		})
+
+		if (!recipe) {
+			throw new NotFoundException(`recipe with slug ${slug} not found`)
+		}
+
+		return recipe
+	}
 }
