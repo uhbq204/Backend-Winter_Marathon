@@ -1,6 +1,18 @@
-import { Field, InputType, Int } from "@nestjs/graphql";
+import { Field, InputType, Int, registerEnumType } from "@nestjs/graphql";
 import { Cuisine, DietaryPreference, HealthGoal, MealType, SpecialOccasion } from "../recipe.enum";
 
+
+
+enum RecipeSort {
+	NEW = "new",
+	RECOMMENDED = "recommended",
+	POPULAR = "popular"
+}
+
+registerEnumType(RecipeSort, {
+	name: "RecipeSort",
+	description: "Sorting options for recipes"
+})
 
 @InputType()
 export class RecipesQueryInput {
@@ -13,8 +25,8 @@ export class RecipesQueryInput {
 	@Field(() => String, { nullable: true })
 	searchTerm?: string
 
-	@Field(() => String, { nullable: true })
-	sort?: 'new' | 'recommended' | 'popular'
+	@Field(() => RecipeSort, { nullable: true, defaultValue: RecipeSort.NEW })
+	sort?: RecipeSort
 
 	@Field(() => MealType, { nullable: true })
 	mealType?: `${MealType}`
