@@ -7,6 +7,8 @@ import { RecipeCreateInput } from './inputs/recipe.input';
 import { RecipeModel as RecipesModel } from './models/recipe.model';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { RecipesQueryInput } from './inputs/get-recipes-query.input';
+import { GetAllRecipesModel } from './models/get-all-recipes.model';
+
 
 
 @Resolver()
@@ -17,7 +19,7 @@ export class RecipesResolver {
     private readonly adminRecipesService: AdminRecipesService
   ) {}
 
-  @Query(() => [RecipesModel], { name: 'recipes' })
+  @Query(() => GetAllRecipesModel, { name: 'recipes' })
   getAll(@Args('input') input: RecipesQueryInput){
     return this.recipesService.getAll(input)
   }
@@ -27,7 +29,7 @@ export class RecipesResolver {
     return this.recipesService.getBySlug(slug)
   }
 
-  @Query(() => [RecipesModel], {name: 'adminRecipes'})
+  @Query(() => GetAllRecipesModel, {name: 'adminRecipes'})
     @Auth(Role.ADMIN)
     getAllAdmin() {
       return this.adminRecipesService.getAll()
