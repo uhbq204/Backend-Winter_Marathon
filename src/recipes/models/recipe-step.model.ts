@@ -15,6 +15,9 @@ export class RecipeStepModel {
     @Field(() => String, { nullable: false })
     description!: string
 
+    @Field(() => String, { nullable: false })
+    image!: string
+
     @Field(() => String, { nullable: true })
     recipeId!: string
 

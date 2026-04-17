@@ -110,7 +110,8 @@ export class AdminRecipesService {
                         create: recipeSteps.map(step => ({
                             order: step.order,
                             title: step.title,
-                            description: step.description
+                            description: step.description,
+                            image: step.image
                         }))
                     }
                 }),

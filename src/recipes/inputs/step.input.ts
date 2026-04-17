@@ -10,4 +10,7 @@ export class RecipeStepInput {
 
     @Field(() => String, { nullable: false })
     description!: string;
+
+    @Field(() => String, { nullable: false })
+    image!: string
 }

@@ -61,6 +61,7 @@ model RecipeStep {
   order       Int
   title       String
   description String
+  image String
 
   recipe   Recipe @relation(fields: [recipeId], references: [id])
   recipeId String @map("recipe_id")
