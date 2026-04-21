@@ -91,7 +91,10 @@ export class RecipesService {
 					include: {
 						ingredient: true
 					}
-				}
+				},
+				author: true,
+				nutritionFact: true,
+				tags: true
 			}
 		})
 
