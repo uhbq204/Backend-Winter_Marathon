@@ -94,7 +94,16 @@ export class RecipesService {
 				},
 				author: true,
 				nutritionFact: true,
-				tags: true
+				tags: true,
+				comments: {
+					include: {
+						author: {
+							include: {
+								profile: true
+							}
+						}
+					}
+				}
 			}
 		})
 

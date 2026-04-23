@@ -5,6 +5,7 @@ import { RecipeTagModel } from "./recipe-tag.model";
 import { RecipeStepModel } from "./recipe-step.model";
 import { RecipeIngredientModel } from "./recipe-ingredient.model";
 import { UserModel } from "src/users/models/user.model";
+import { CommentModel } from "../reaction/models/comment.model";
 
 @ObjectType()
 export class RecipeModel {
@@ -76,4 +77,7 @@ export class RecipeModel {
 
 	@Field(() => Int, { nullable: true })
 	likes?: number
+
+	@Field(() => [CommentModel], { nullable: true })
+	comments?: Array<CommentModel>
 }
