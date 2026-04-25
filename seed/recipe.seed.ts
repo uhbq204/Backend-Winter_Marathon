@@ -14,14 +14,15 @@ const adapter = new PrismaPg(pool)
 const prisma = new PrismaClient({ adapter })
 
 async function cleanupRecipeData() {
-	await prisma.$transaction([
-		prisma.like.deleteMany(),
-		prisma.recipeStep.deleteMany(),
-		prisma.recipeIngredient.deleteMany(),
-		prisma.nutritionFact.deleteMany(),
-		prisma.recipe.deleteMany(),
-		prisma.ingredient.deleteMany()
-	])
+  await prisma.$transaction(async tx => {
+    await tx.like.deleteMany()
+    await tx.comment.deleteMany()
+    await tx.recipeStep.deleteMany()
+    await tx.recipeIngredient.deleteMany()
+    await tx.nutritionFact.deleteMany()
+    await tx.recipe.deleteMany()
+    await tx.ingredient.deleteMany()
+  })
 }
 
 async function ensureLikerPool(maxLikesCount: number) {
